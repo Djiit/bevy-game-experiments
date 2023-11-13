@@ -19,14 +19,13 @@ jobs:
         with:
           targets: wasm32-unknown-unknown
       - name: Install Trunk
-        run: cargo install trunk
+        run: wget -qO- https://github.com/thedodd/trunk/releases/download/v0.17.5/trunk-x86_64-unknown-linux-gnu.tar.gz | tar -xzf-
 
       - name: Build
-        run: trunk build
+        run: ./trunk build --public-url=/bevy-game-experiments
       - name: Upload binaries to artifacts
         uses: actions/upload-pages-artifact@v2
         with:
           path: dist
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v2
