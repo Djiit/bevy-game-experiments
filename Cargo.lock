@@ -531,14 +531,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "bevy_game"
-version = "0.1.0"
-dependencies = [
- "bevy",
- "bevy_screen_diagnostics",
-]
-
-[[package]]
 name = "bevy_gilrs"
 version = "0.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1653,6 +1645,14 @@ dependencies = [
  "parking",
  "pin-project-lite",
  "waker-fn",
+]
+
+[[package]]
+name = "game-experiments"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+ "bevy_screen_diagnostics",
 ]
 
 [[package]]
