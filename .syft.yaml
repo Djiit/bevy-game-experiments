@@ -1,0 +1,5 @@
+source:
+  name: game-experiments
+catalogers:
+  - rust-cargo-lock
+  - cargo-auditable-binary
