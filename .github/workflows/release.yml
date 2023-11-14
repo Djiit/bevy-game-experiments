@@ -141,7 +141,6 @@ jobs:
   # Build for MacOS x86_64
   release-macOS-intel:
     runs-on: macOS-latest
-
     steps:
       - uses: olegtarasov/get-tag@v2.1.2
         id: get_version
@@ -153,25 +152,25 @@ jobs:
         run: |
           export CFLAGS="-fno-stack-check"
           export MACOSX_DEPLOYMENT_TARGET="10.9"
-
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2.7.0
+      - name: Run sccache-cache
+        uses: mozilla-actions/sccache-action@v0.0.3
       - name: Build
         run: |
           cargo build --release --target x86_64-apple-darwin
-
       - name: Prepare Package
         run: |
           mkdir -p ${{ env.BINARY_NAME }}.app/Contents/MacOS
           cp target/x86_64-apple-darwin/release/${{ env.BINARY_NAME }} ${{ env.BINARY_NAME }}.app/Contents/MacOS/
           cp -r assets ${{ env.BINARY_NAME }}.app/Contents/MacOS/
           hdiutil create -fs HFS+ -volname "${{ env.BINARY_NAME }}" -srcfolder ${{ env.BINARY_NAME }}.app ${{ env.BINARY_NAME }}-macOS-intel.dmg
-
       - name: Upload binaries to artifacts
         uses: actions/upload-artifact@v3
         with:
           path: ${{ env.BINARY_NAME }}-macOS-intel.dmg
           name: macOS-intel
           retention-days: 1
-
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
@@ -184,7 +183,6 @@ jobs:
   # Build for MacOS Apple Silicon
   release-macOS-apple-silicon:
     runs-on: macOS-latest
-
     steps:
       - uses: olegtarasov/get-tag@v2.1.2
         id: get_version
@@ -196,25 +194,25 @@ jobs:
         # macOS 11 was the first version to support ARM
         run: |
           export MACOSX_DEPLOYMENT_TARGET="11"
-
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2.7.0
+      - name: Run sccache-cache
+        uses: mozilla-actions/sccache-action@v0.0.3
       - name: Build
         run: |
           cargo build --release --target aarch64-apple-darwin
-
       - name: Prepare Package
         run: |
           mkdir -p ${{ env.BINARY_NAME }}.app/Contents/MacOS
           cp target/aarch64-apple-darwin/release/${{ env.BINARY_NAME }} ${{ env.BINARY_NAME }}.app/Contents/MacOS/
           cp -r assets ${{ env.BINARY_NAME }}.app/Contents/MacOS/
           hdiutil create -fs HFS+ -volname "${{ env.BINARY_NAME }}-macOS-apple-silicon" -srcfolder ${{ env.BINARY_NAME }}.app ${{ env.BINARY_NAME }}-macOS-apple-silicon.dmg
-
       - name: Upload binaries to artifacts
         uses: actions/upload-artifact@v3
         with:
           path: ${{ env.BINARY_NAME }}-macOS-apple-silicon.dmg
           name: macOS-apple-silicon
           retention-days: 1
-
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
