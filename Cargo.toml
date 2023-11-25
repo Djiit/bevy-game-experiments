@@ -10,6 +10,7 @@ bevy = { version = "0.12.0" }
 bevy_kira_audio = "0.18.0"
 bevy_screen_diagnostics = "0.4.0"
 rand = "0.8.5"
+bevy-debug-text-overlay = "7.0.0"
 
 # Enable a small amount of optimization in debug mode
 [profile.dev]
