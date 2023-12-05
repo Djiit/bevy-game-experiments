@@ -23,3 +23,5 @@ jobs:
         with:
           sbom: "${{ github.event.repository.name }}-sbom.spdx.json"
           severity-cutoff: critical
+      - name: Run Cargo deny
+        uses: EmbarkStudios/cargo-deny-action@v1
